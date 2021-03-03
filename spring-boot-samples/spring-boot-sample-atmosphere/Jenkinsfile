@@ -7,17 +7,12 @@ pipeline {
 		maven 'M3.6'
 	}
 	stages {
-		stage('Checkout') {
-			steps {
-    			git "https://github.com/akmaharshi/$myrepo"
-    		}
-		}
 
-				stage('Build') {
-					steps {
-    					sh "mvn clean package -f $project_path/pom.xml"
-    				}
-				}
+		stage('Build') {
+			steps {
+    				sh "mvn clean package -f $project_path/pom.xml"
+    			}
+		}
 		stage('Post Build Actions') {
 			parallel {
 				stage('Test Result') {
