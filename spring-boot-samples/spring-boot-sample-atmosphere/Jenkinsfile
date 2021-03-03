@@ -9,6 +9,12 @@ pipeline {
 	parameters { 
 		string(name: 'MVN_OPTION', defaultValue: 'package', description: '') 
 	}
+	options {
+        	timeout(time: 1, unit: 'HOURS') 
+    	}
+	triggers {
+        	cron('0 12 * * 0')
+    	}
 	stages {
 
 		stage('Build') {
