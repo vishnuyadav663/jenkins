@@ -1,9 +1,8 @@
 pipeline {
 	agent any
 	environment { 
-        myrepo = 'jenkins.git'
-        project_path='spring-boot-samples/spring-boot-sample-atmosphere'
-    }
+        	project_path='spring-boot-samples/spring-boot-sample-atmosphere'
+    	}
 	tools {
 		maven 'M3.6'
 	}
