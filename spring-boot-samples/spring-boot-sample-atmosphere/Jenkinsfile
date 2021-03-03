@@ -6,11 +6,14 @@ pipeline {
 	tools {
 		maven 'M3.6'
 	}
+	parameters { 
+		string(name: 'MVN_OPTION', defaultValue: 'package', description: '') 
+	}
 	stages {
 
 		stage('Build') {
 			steps {
-    				sh "mvn clean package -f $project_path/pom.xml"
+    				sh "mvn clean $MVN_OPTION -f $project_path/pom.xml"
     			}
 		}
 		stage('Post Build Actions') {
