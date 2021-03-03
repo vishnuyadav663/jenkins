@@ -1,0 +1,45 @@
+pipeline {
+	agent any
+	environment { 
+        myrepo = 'jenkins.git'
+        project_path='spring-boot-samples/spring-boot-sample-atmosphere'
+    }
+	tools {
+		maven 'M3.6'
+	}
+	stages {
+		stage('Checkout') {
+			steps {
+    			git "https://github.com/akmaharshi/$myrepo"
+    		}
+		}
+
+				stage('Build') {
+					steps {
+    					sh "mvn clean package -f $project_path/pom.xml"
+    				}
+				}
+		stage('Post Build Actions') {
+			parallel {
+				stage('Test Result') {
+					steps {
+						junit "$project_path/target/surefire-reports/*.xml"
+					}
+				}
+				stage('Archive Artifact') {
+					steps {
+					    archiveArtifacts artifacts: "$project_path/target/*.?ar", followSymlinks: false
+					}
+				}
+			}
+		}
+	}
+	post {
+		success {
+			echo "Success"
+		}
+		failure {
+			echo "Failed"
+		}
+	}
+}
